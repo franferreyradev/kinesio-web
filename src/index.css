@@ -1,0 +1,19 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brand-green: #8FA189;
+  --color-brand-rose: #C38E7D;
+  --color-brand-tan: #D9C5A3;
+  --color-brand-cream: #F4F1EA;
+  --color-brand-dark: #4A4A4A;
+  --font-serif: "Playfair Display", serif;
+  --font-sans: "Montserrat", sans-serif;
+}
+
+@layer base {
+  body {
+    background-color: var(--color-brand-cream);
+    color: var(--color-brand-dark);
+    font-family: var(--font-sans);
+  }
+}
