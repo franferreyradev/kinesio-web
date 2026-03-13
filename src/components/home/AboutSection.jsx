@@ -68,7 +68,7 @@ const AboutSection = () => {
                 <h3 className="text-4xl font-serif italic text-brand-cream">Trayectoria Académica</h3>
                 <button 
                   onClick={() => setIsFlipped(false)}
-                  className="p-4 bg-white/10 hover:bg-white/20 rounded-full transition-all text-brand-rose"
+                  className="p-4 bg-white/10 hover:bg-white/20 rounded-full transition-all text-brand-tan"
                 >
                   <RotateCcw size={28} />
                 </button>
@@ -77,7 +77,7 @@ const AboutSection = () => {
               <div className="grid grid-cols-2 gap-8">
                 {academicInfo.map((edu, index) => (
                   <div key={index} className="bg-white/10 p-6 rounded-3xl border border-white/10 backdrop-blur-sm">
-                    <BookOpen className="text-brand-rose mb-4" size={28} />
+                    <BookOpen className="text-brand-tan mb-4" size={28} />
                     <p className="font-sans font-bold text-lg mb-1">{edu.title}</p>
                     <p className="font-sans text-brand-cream/60 text-sm">{edu.institution}</p>
                   </div>

@@ -5,6 +5,7 @@ import Navbar from './components/layout/Navbar';
 import Home from './pages/Home';
 import Services from './pages/Services';
 import Contact from './pages/Contact';
+import Blog from './pages/Blog';
 import Footer from './components/layout/Footer';
 import WhatsAppButton from './components/ui/WhatsAppButton';
 import ScrollToTop from './components/ui/ScrollToTop';
@@ -41,6 +42,7 @@ return (
               <Route path="/" element={<Home />} />
               <Route path="/servicios" element={<Services />} />
               <Route path="/contacto" element={<Contact />} />
+              <Route path="/blog" element={<Blog />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
             <WhatsAppButton />
