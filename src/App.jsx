@@ -6,6 +6,7 @@ import Contact from './pages/Contact';
 import Footer from './components/layout/Footer';
 import WhatsAppButton from './components/ui/WhatsAppButton';
 import ScrollToTop from './components/ui/ScrollToTop';
+import NotFound from './pages/NotFound';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/servicios" element={<Services />} />
         <Route path="/contacto" element={<Contact />} />
+        <Route path="*" element={<NotFound/>}/>
       </Routes>
       <WhatsAppButton/>
       <Footer/>
