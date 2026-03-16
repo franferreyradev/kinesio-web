@@ -9,35 +9,42 @@ const Blog = () => {
   const [selectedPost, setSelectedPost] = useState(null);
   const [currentImgIndex, setCurrentImgIndex] = useState(0);
 
-  // Detectar ID en URL y abrir modal automáticamente
+  // SOLUCIÓN AL ERROR: Detectar ID en URL y resetear SIEMPRE el índice a 0
   useEffect(() => {
     const id = searchParams.get('id');
     if (id) {
       const post = blogPosts.find(p => p.id === parseInt(id));
       if (post) {
         setSelectedPost(post);
-        setCurrentImgIndex(0);
+        setCurrentImgIndex(0); // Forzamos el inicio en la primera imagen
       }
+    } else {
+      setSelectedPost(null);
+      setCurrentImgIndex(0);
     }
   }, [searchParams]);
 
   const closeModal = () => {
     setSelectedPost(null);
-    setSearchParams({}); // Limpia la URL al cerrar
+    setCurrentImgIndex(0); // Reset preventivo al cerrar
+    setSearchParams({}); 
   };
 
   const nextImg = (e) => {
     e.stopPropagation();
-    setCurrentImgIndex((prev) => (prev + 1) % selectedPost.images.length);
+    if (selectedPost) {
+      setCurrentImgIndex((prev) => (prev + 1) % selectedPost.images.length);
+    }
   };
 
   const prevImg = (e) => {
     e.stopPropagation();
-    setCurrentImgIndex((prev) => (prev - 1 + selectedPost.images.length) % selectedPost.images.length);
+    if (selectedPost) {
+      setCurrentImgIndex((prev) => (prev - 1 + selectedPost.images.length) % selectedPost.images.length);
+    }
   };
 
   return (
-    // Agregamos bg-brand-cream/20 y un pt-40 para que el Navbar no tape el título
     <div className="pt-32 md:pt-44 pb-24 px-6 min-h-screen bg-brand-cream/20">
       <div className="max-w-6xl mx-auto">
         
@@ -75,7 +82,10 @@ const Blog = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.05 }}
               whileHover={{ y: -8 }}
-              onClick={() => setSelectedPost(post)}
+              onClick={() => {
+                setSelectedPost(post);
+                setCurrentImgIndex(0); // Reset al clickear manualmente
+              }}
               className="group cursor-pointer aspect-square rounded-[2.5rem] overflow-hidden relative shadow-md hover:shadow-2xl transition-all border-4 border-white bg-white"
             >
               <img 
@@ -84,7 +94,7 @@ const Blog = () => {
                 alt={post.title} 
               />
               <div className="absolute inset-0 bg-brand-green/20 group-hover:bg-brand-green/50 transition-colors flex flex-col items-center justify-center p-6 text-center">
-                <Layers className="text-brand-tan mb-2 opacity-0 group-hover:opacity-100 transition-opacity" />
+                <Layers className="text-white mb-2 opacity-0 group-hover:opacity-100 transition-opacity" />
                 <h3 className="text-white font-serif text-lg opacity-0 group-hover:opacity-100 transition-opacity">
                    {post.title}
                 </h3>
@@ -102,11 +112,12 @@ const Blog = () => {
             initial={{ opacity: 0 }} 
             animate={{ opacity: 1 }} 
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-8 bg-brand-dark/95 backdrop-blur-md"
+            className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-8 bg-brand-dark/95 backdrop-blur-sm"
             onClick={closeModal}
           >
             <motion.button 
               whileHover={{ rotate: 90 }}
+              onClick={closeModal}
               className="absolute top-8 right-8 text-white/50 hover:text-white z-[110]"
             >
               <X size={40}/>
@@ -122,24 +133,29 @@ const Blog = () => {
                {/* Área del Visualizador */}
                <div className="relative w-full md:w-2/3 bg-black flex items-center justify-center overflow-hidden">
                   <AnimatePresence mode="wait">
+                    {/* La KEY combinada asegura que React no se confunda al cambiar de imagen o post */}
                     <motion.img 
-                      key={currentImgIndex}
-                      initial={{ opacity: 0, scale: 1.1 }} 
+                      key={`${selectedPost.id}-${currentImgIndex}`}
+                      initial={{ opacity: 0, scale: 1.05 }} 
                       animate={{ opacity: 1, scale: 1 }}
-                      exit={{ opacity: 0, scale: 0.9 }}
-                      transition={{ duration: 0.4 }}
+                      exit={{ opacity: 0, scale: 0.95 }}
+                      transition={{ duration: 0.3 }}
                       src={selectedPost.images[currentImgIndex]} 
                       className="w-full h-full object-contain" 
                     />
                   </AnimatePresence>
 
                   {/* Navegación */}
-                  <button onClick={prevImg} className="absolute left-6 p-4 rounded-full bg-white/10 hover:bg-brand-rose text-white transition-all backdrop-blur-md">
-                    <ChevronLeft size={24}/>
-                  </button>
-                  <button onClick={nextImg} className="absolute right-6 p-4 rounded-full bg-white/10 hover:bg-brand-rose text-white transition-all backdrop-blur-md">
-                    <ChevronRight size={24}/>
-                  </button>
+                  {selectedPost.images.length > 1 && (
+                    <>
+                      <button onClick={prevImg} className="absolute left-6 p-4 rounded-full bg-white/10 hover:bg-brand-rose text-white transition-all backdrop-blur-md">
+                        <ChevronLeft size={24}/>
+                      </button>
+                      <button onClick={nextImg} className="absolute right-6 p-4 rounded-full bg-white/10 hover:bg-brand-rose text-white transition-all backdrop-blur-md">
+                        <ChevronRight size={24}/>
+                      </button>
+                    </>
+                  )}
 
                   {/* Dots */}
                   <div className="absolute bottom-8 flex gap-3">
@@ -150,7 +166,7 @@ const Blog = () => {
                </div>
 
                {/* Área de Información */}
-               <div className="w-full md:w-1/3 p-12 flex flex-col justify-between bg-white">
+               <div className="w-full md:w-1/3 p-12 flex flex-col justify-between bg-white overflow-y-auto">
                   <div className="space-y-8">
                     <div className="flex items-center gap-3 text-brand-rose">
                       <Instagram size={20} />
@@ -163,7 +179,7 @@ const Blog = () => {
                     </p>
                   </div>
                   
-                  <button className="w-full py-5 bg-brand-green text-white rounded-2xl font-sans font-bold uppercase tracking-[0.2em] text-[10px] hover:bg-brand-rose transition-all shadow-lg flex items-center justify-center gap-3">
+                  <button className="w-full py-5 bg-brand-green text-white rounded-2xl font-sans font-bold uppercase tracking-[0.2em] text-[10px] hover:bg-brand-rose transition-all shadow-lg flex items-center justify-center gap-3 mt-8">
                     <Instagram size={16}/> Ver en Instagram
                   </button>
                </div>
