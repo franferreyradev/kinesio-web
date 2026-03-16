@@ -1,115 +1,207 @@
-import { motion } from 'framer-motion';
-import { Activity, Heart, Users, Calendar, ArrowRight } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { 
+  CheckCircle2, 
+  Plus, 
+  Minus, 
+  ArrowUpRight, 
+  Activity, 
+  Wind, 
+  Heart 
+} from 'lucide-react';
 
-const allServices = [
+// Datos de servicios con sus subservicios específicos
+const servicesData = [
   {
-    id: 'kinesio-deportiva',
-    title: "Kinesiología Deportiva",
-    description: "Especializada en la prevención y tratamiento de lesiones derivadas de la práctica deportiva. Orientado a atletas de alto rendimiento y aficionados.",
-    benefits: ["Retorno seguro al deporte", "Optimización del gesto técnico", "Prevención de recidivas"],
-    icon: <Activity className="text-brand-rose" size={32} />
+    id: "rehabilitacion-deportiva",
+    title: "Rehabilitación Deportiva",
+    subtitle: "Vuelve al campo con más fuerza",
+    description: "Tratamientos especializados para atletas y personas activas. Nos enfocamos en la recuperación funcional y la optimización del rendimiento físico.",
+    image: "https://images.unsplash.com/photo-1574680096145-d05b474e2155?auto=format&fit=crop&q=80&w=1000",
+    icon: <Activity size={24} />,
+    subservices: [
+      { name: "Punción Seca", desc: "Tratamiento de puntos gatillo para eliminar contracturas profundas." },
+      { name: "Vendaje Neuromuscular", desc: "Soporte elástico que ayuda a la estabilidad sin limitar el movimiento." },
+      { name: "Readaptación al Gesto Deportivo", desc: "Ejercicios específicos para volver a tu deporte sin miedo a recaer." }
+    ]
   },
   {
-    id: 'fisioterapia-manual',
-    title: "Fisioterapia Manual",
-    description: "Técnicas de terapia manual ortopédica para tratar disfunciones músculo-esqueléticas, dolor de espalda y cervicalgias.",
-    benefits: ["Alivio inmediato del dolor", "Mejora del rango de movimiento", "Reducción de la tensión muscular"],
-    icon: <Heart className="text-brand-rose" size={32} />
+    id: "kinesiologia-respiratoria",
+    title: "Kinesiología Respiratoria",
+    subtitle: "Mejora tu capacidad vital",
+    description: "Técnicas manuales y ejercicios diseñados para mejorar la función pulmonar y la mecánica respiratoria.",
+    image: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&q=80&w=1000",
+    icon: <Wind size={24} />,
+    subservices: [
+      { name: "Higiene Bronquial", desc: "Técnicas para facilitar la eliminación de secreciones." },
+      { name: "Reeducación Diafragmática", desc: "Optimización del uso del músculo principal de la respiración." },
+      { name: "Entrenamiento de Músculos Inspiratorios", desc: "Fortalecimiento específico para mejorar la resistencia." }
+    ]
   },
   {
-    id: 'rehabilitacion',
-    title: "Rehabilitación Integral",
-    description: "Tratamientos personalizados para recuperación post-quirúrgica o afecciones crónicas, con seguimiento constante.",
-    benefits: ["Plan adaptado a tu ritmo", "Ejercicios terapéuticos", "Educación del paciente"],
-    icon: <Users className="text-brand-rose" size={32} />
+    id: "terapia-manual",
+    title: "Terapia Manual Integrada",
+    subtitle: "Alivio preciso y humano",
+    description: "Abordaje integral del dolor mediante manipulaciones articulares y técnicas de tejido blando para restaurar el movimiento.",
+    image: "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&q=80&w=1000",
+    icon: <Heart size={24} />,
+    subservices: [
+      { name: "Movilización Articular", desc: "Técnicas suaves para recuperar el rango de movimiento perdido." },
+      { name: "Masaje Terapéutico", desc: "Tratamiento de tejidos blandos para reducir el estrés neuromuscular." },
+      { name: "Osteopatía sutil", desc: "Enfoque holístico para equilibrar las tensiones del cuerpo." }
+    ]
   }
 ];
 
 const Services = () => {
-  return (
-    <main className="pt-24 bg-brand-cream/10">
-      {/* Header de la Página */}
-      <section className="py-16 px-6 text-center">
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="max-w-3xl mx-auto"
-        >
-          <h1 className="text-4xl md:text-5xl font-serif text-brand-green mb-6">Propuestas de Bienestar</h1>
-          <p className="text-brand-dark/70 font-sans leading-relaxed">
-            Cada tratamiento comienza con una evaluación exhaustiva para diseñar el camino 
-            más efectivo hacia tu recuperación y máximo potencial físico.
-          </p>
-        </motion.div>
-      </section>
+  const [activeSub, setActiveSub] = useState(null);
 
-      {/* Listado Detallado de Servicios */}
-      <section className="py-12 px-6">
-        <div className="max-w-6xl mx-auto space-y-12">
-          {allServices.map((service, index) => (
-            <motion.div 
+  // Función para manejar el mensaje de WhatsApp dinámico
+  const handleWhatsApp = (serviceTitle, subName = "") => {
+    const baseMessage = `Hola Ana Sol! Me gustaría consultar por el servicio de ${serviceTitle}`;
+    const subMessage = subName ? ` específicamente sobre ${subName}` : "";
+    const finalMessage = encodeURIComponent(`${baseMessage}${subMessage}.`);
+    window.open(`https://wa.me/tu_numero_aqui?text=${finalMessage}`, '_blank');
+  };
+
+  return (
+    <div className="pt-32 md:pt-44 pb-24 bg-brand-cream/20 min-h-screen">
+      <div className="max-w-6xl mx-auto px-6">
+        
+        {/* Header de la página */}
+        <div className="text-center mb-24">
+          <motion.span 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="text-brand-rose font-sans font-bold uppercase tracking-[0.3em] text-[10px] mb-4 block"
+          >
+            Nuestras Especialidades
+          </motion.span>
+          <motion.h1 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-5xl md:text-7xl font-serif text-brand-green italic"
+          >
+            Tratamientos <br /> <span className="not-italic">Integrales</span>
+          </motion.h1>
+          <p className="mt-8 text-brand-dark/60 max-w-xl mx-auto font-sans leading-relaxed">
+            Cada paciente es único. Diseñamos planes de rehabilitación personalizados basados en la evidencia científica y la calidez humana.
+          </p>
+        </div>
+
+        {/* Listado de Servicios (Z-Pattern) */}
+        <div className="space-y-40">
+          {servicesData.map((service, index) => (
+            <div 
               key={service.id}
-              initial={{ opacity: 0, x: index % 2 === 0 ? -30 : 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              className={`flex flex-col md:flex-row gap-8 p-8 bg-white rounded-3xl shadow-sm border border-brand-tan/10 items-center ${index % 2 !== 0 ? 'md:flex-row-reverse' : ''}`}
+              className={`flex flex-col gap-16 items-start ${
+                index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'
+              }`}
             >
-              <div className="flex-1 space-y-4">
-                <div className="bg-brand-cream w-16 h-16 rounded-2xl flex items-center justify-center mb-4">
-                  {service.icon}
+              {/* Contenedor de Imagen */}
+              <motion.div 
+                initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                className="w-full md:w-1/2 relative"
+              >
+                <div className="relative group">
+                  <div className="absolute inset-0 bg-brand-green/10 rounded-[3.5rem] rotate-3 group-hover:rotate-0 transition-transform duration-500"></div>
+                  <img 
+                    src={service.image} 
+                    alt={service.title}
+                    className="relative z-10 w-full aspect-square object-cover rounded-[3.5rem] shadow-2xl border-8 border-white"
+                  />
+                  <div className="absolute -bottom-6 -right-6 bg-brand-rose p-6 rounded-3xl text-white shadow-xl z-20 hidden md:block">
+                    {service.icon}
+                  </div>
                 </div>
-                <h2 className="text-2xl font-serif text-brand-green">{service.title}</h2>
-                <p className="text-brand-dark/80 font-sans leading-relaxed">{service.description}</p>
-                <ul className="space-y-2">
-                  {service.benefits.map((benefit, i) => (
-                    <li key={i} className="flex items-center text-sm text-brand-dark/60 font-sans">
-                      <div className="w-1.5 h-1.5 bg-brand-tan rounded-full mr-2" />
-                      {benefit}
-                    </li>
-                  ))}
-                </ul>
-                <div className="pt-4">
-                   <Link to="/contacto" className="inline-flex items-center text-brand-rose font-bold text-sm uppercase tracking-widest hover:gap-2 transition-all">
-                    Consultar por este servicio <ArrowRight size={16} className="ml-2" />
-                   </Link>
+              </motion.div>
+
+              {/* Contenedor de Texto y Subservicios */}
+              <motion.div 
+                initial={{ opacity: 0, x: index % 2 === 0 ? 50 : -50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                className="w-full md:w-1/2 space-y-8"
+              >
+                <div className="space-y-4">
+                  <div className="flex items-center gap-3 text-brand-rose">
+                    <span className="font-sans font-bold uppercase tracking-widest text-[10px]">
+                      {service.subtitle}
+                    </span>
+                  </div>
+                  <h2 className="text-4xl font-serif text-brand-green">{service.title}</h2>
+                  <p className="text-brand-dark/70 font-sans leading-relaxed">
+                    {service.description}
+                  </p>
                 </div>
-              </div>
-              <div className="flex-1 w-full h-64 bg-brand-cream/30 rounded-2xl overflow-hidden">
-                {/* Placeholder para fotos reales de cada servicio */}
-                <div className="w-full h-full flex items-center justify-center text-brand-tan italic">
-                  [Imagen de {service.title}]
+
+                {/* Desglose de Subservicios (Acordeón) */}
+                <div className="pt-4 space-y-3">
+                  <h4 className="text-[10px] font-bold uppercase tracking-[0.2em] text-brand-tan border-b border-brand-tan/20 pb-2">
+                    Tratamientos Específicos
+                  </h4>
+                  
+                  {service.subservices.map((sub, sIdx) => {
+                    const uniqueId = `${service.id}-${sIdx}`;
+                    const isOpen = activeSub === uniqueId;
+
+                    return (
+                      <div 
+                        key={uniqueId}
+                        className={`transition-all duration-300 ${isOpen ? 'bg-white rounded-3xl p-6 shadow-sm' : 'bg-transparent'}`}
+                      >
+                        <button 
+                          onClick={() => setActiveSub(isOpen ? null : uniqueId)}
+                          className="w-full flex justify-between items-center text-left"
+                        >
+                          <span className={`font-serif text-xl ${isOpen ? 'text-brand-rose' : 'text-brand-green'}`}>
+                            {sub.name}
+                          </span>
+                          {isOpen ? <Minus size={18} className="text-brand-rose" /> : <Plus size={18} className="text-brand-tan" />}
+                        </button>
+
+                        <AnimatePresence>
+                          {isOpen && (
+                            <motion.div
+                              initial={{ height: 0, opacity: 0 }}
+                              animate={{ height: 'auto', opacity: 1 }}
+                              exit={{ height: 0, opacity: 0 }}
+                              className="overflow-hidden"
+                            >
+                              <p className="text-brand-dark/60 text-sm font-sans mt-4 leading-relaxed">
+                                {sub.desc}
+                              </p>
+                              <button 
+                                onClick={() => handleWhatsApp(service.title, sub.name)}
+                                className="mt-4 flex items-center gap-2 text-[10px] font-bold text-brand-green uppercase tracking-widest hover:text-brand-rose transition-colors"
+                              >
+                                Consultar tratamiento <ArrowUpRight size={14} />
+                              </button>
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
+                      </div>
+                    );
+                  })}
                 </div>
-              </div>
-            </motion.div>
+
+                <div className="pt-6">
+                   <button 
+                    onClick={() => handleWhatsApp(service.title)}
+                    className="px-10 py-4 bg-brand-green text-white rounded-full font-sans font-bold uppercase tracking-widest text-[10px] hover:bg-brand-rose transition-all shadow-lg w-full md:w-auto"
+                   >
+                    Consulta General
+                   </button>
+                </div>
+              </motion.div>
+            </div>
           ))}
         </div>
-      </section>
 
-      {/* Banner de Cierre (CTA Final) */}
-      <section className="py-20 px-6">
-        <motion.div 
-          whileInView={{ scale: [0.95, 1] }}
-          className="max-w-4xl mx-auto bg-brand-green p-12 rounded-[3rem] text-center text-white relative overflow-hidden shadow-2xl"
-        >
-          <div className="relative z-10">
-            <h2 className="text-3xl md:text-4xl font-serif mb-6">¿Listo para dar el primer paso?</h2>
-            <p className="mb-10 text-brand-cream/80 font-sans max-w-xl mx-auto">
-              La disponibilidad de turnos es limitada para garantizar una atención 100% personalizada. 
-              Reserva tu consulta inicial hoy mismo.
-            </p>
-            <Link 
-              to="/contacto" 
-              className="bg-white text-brand-green px-10 py-4 rounded-full font-sans font-bold uppercase tracking-widest text-sm hover:bg-brand-rose hover:text-white transition-all inline-flex items-center gap-3"
-            >
-              <Calendar size={18} /> Agendar Turno
-            </Link>
-          </div>
-          {/* Círculo decorativo de fondo */}
-          <div className="absolute -top-20 -right-20 w-64 h-64 bg-white/5 rounded-full" />
-        </motion.div>
-      </section>
-    </main>
+      </div>
+    </div>
   );
 };
 
