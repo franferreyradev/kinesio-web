@@ -20,7 +20,7 @@ const Loader = () => {
         }}
         className="w-24 h-24 border-2 border-brand-green rounded-full flex items-center justify-center mb-4"
       >
-         <span className="font-serif text-brand-green font-bold text-xl tracking-tighter">LUMARE</span>
+         <span className="font-serif text-brand-green font-bold text-xl tracking-tighter">SP</span>
       </motion.div>
 
       {/* Texto de carga sutil */}

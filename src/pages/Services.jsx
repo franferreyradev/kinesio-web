@@ -13,42 +13,47 @@ import {
 // Datos de servicios con sus subservicios específicos
 const servicesData = [
   {
-    id: "rehabilitacion-deportiva",
-    title: "Rehabilitación Deportiva",
-    subtitle: "Vuelve al campo con más fuerza",
-    description: "Tratamientos especializados para atletas y personas activas. Nos enfocamos en la recuperación funcional y la optimización del rendimiento físico.",
+    id: "TMI",
+    title: "Terapia Manual Integrada",
+    subtitle: "Alivio y Movilidad",
+    description: "Abordaje integral del dolor mediante técnicas que permiten aliviar tensiones, recuperar la movilidad y restablecer la función corporal.",
     image: "https://images.unsplash.com/photo-1574680096145-d05b474e2155?auto=format&fit=crop&q=80&w=1000",
     icon: <Activity size={24} />,
     subservices: [
-      { name: "Punción Seca", desc: "Tratamiento de puntos gatillo para eliminar contracturas profundas." },
-      { name: "Vendaje Neuromuscular", desc: "Soporte elástico que ayuda a la estabilidad sin limitar el movimiento." },
-      { name: "Readaptación al Gesto Deportivo", desc: "Ejercicios específicos para volver a tu deporte sin miedo a recaer." }
+      { name: "Masaje terapéutico espalda y cuello", desc: "Ideal si sentís tensión, contracturas o molestias en la zona cervical y dorsal por estrés o postura." },
+      { name: "Masaje terapeutico cuerpo completo", desc: "Recomendado si sentís el cuerpo cargado, con tensión generalizada o necesitás relajarte completamente." },
+      { name: "Descarga muscular para deportistas", desc: "Ideal si entrenás con frecuencia y sentís sobrecarga o fatiga muscular." },
+      { name: "Punción seca y ventosas", desc: "Recomendado para tratar contracturas crónicas y puntos de dolor localizados." },
+      { name: "Drenaje linfático manual", desc: "Recomendado para tratar contracturas crónicas y puntos de dolor localizados." }
     ]
   },
   {
-    id: "kinesiologia-respiratoria",
-    title: "Kinesiología Respiratoria",
+    id: "KYF",
+    title: "Kinesiología y Fisioterapia",
     subtitle: "Mejora tu capacidad vital",
-    description: "Técnicas manuales y ejercicios diseñados para mejorar la función pulmonar y la mecánica respiratoria.",
+    description: "Donde la ciencia se encuentra con el movimiento para devolverte o mejorar tu calidad de vida.",
     image: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&q=80&w=1000",
     icon: <Wind size={24} />,
     subservices: [
-      { name: "Higiene Bronquial", desc: "Técnicas para facilitar la eliminación de secreciones." },
-      { name: "Reeducación Diafragmática", desc: "Optimización del uso del músculo principal de la respiración." },
-      { name: "Entrenamiento de Músculos Inspiratorios", desc: "Fortalecimiento específico para mejorar la resistencia." }
+      { name: "Rehabilitacion y prevencion de lesiones", desc: "Ideal si presentas dolor, molestias o limitaciones en el movimiento y buscás recuperarte o prevenir futuras lesiones." },
+      { name: "Rehabilitación de Bruxismo", desc: "Recomendado si sentís tensión mandibular, dolor en la zona o molestias asociadas al bruxismo." },
+      { name: "Rehabilitación de la función respiratoria", desc: "Recomendado si atravesaste un cuadro respiratorio y queres mejorar tu capacidad pulmonar junto con la higiene bronquial." },
+      { name: "Entrenamiento adaptado", desc: "Recomendado si querés retomar o iniciar  actividad física de forma progresiva, segura y acorde a tus necesidades." }
     ]
   },
   {
-    id: "terapia-manual",
-    title: "Terapia Manual Integrada",
-    subtitle: "Alivio preciso y humano",
-    description: "Abordaje integral del dolor mediante manipulaciones articulares y técnicas de tejido blando para restaurar el movimiento.",
+    id: "PTI",
+    title: "Estética Facial y Corporal",
+    subtitle: "Potencia Tu Imagen",
+    description: "Disciplina que combina conocimientos estéticos y terapéuticos para mejorar la salud, apariencia y funcionalidad de la piel y tejidos.",
     image: "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&q=80&w=1000",
     icon: <Heart size={24} />,
     subservices: [
-      { name: "Movilización Articular", desc: "Técnicas suaves para recuperar el rango de movimiento perdido." },
-      { name: "Masaje Terapéutico", desc: "Tratamiento de tejidos blandos para reducir el estrés neuromuscular." },
-      { name: "Osteopatía sutil", desc: "Enfoque holístico para equilibrar las tensiones del cuerpo." }
+      { name: "Limpieza facial profunda", desc: "Ideal para eliminar impurezas, celulas muertas, puntos negros, mejorar la textura y devolverle luminosidad a tu piel." },
+      { name: "Microneedling facial.", desc: "Recomendado para mejorar la calidad de tu piel, estimular colágeno y tratar deshidratación,  manchas o líneas de expresión." },
+      { name: "Maderoterapia", desc: "Ideal para activar la circulación, modelar el cuerpo y mejorar la apariencia de la piel." },
+      { name: "Microneedling corporal para estrías", desc: "Recomendado para mejorar la apariencia de estrías y favorecer la regeneración de la piel." }
+
     ]
   }
 ];
@@ -85,7 +90,7 @@ const Services = () => {
             Tratamientos <br /> <span className="not-italic">Integrales</span>
           </motion.h1>
           <p className="mt-8 text-brand-dark/60 max-w-xl mx-auto font-sans leading-relaxed">
-            Cada paciente es único. Diseñamos planes de rehabilitación personalizados basados en la evidencia científica y la calidez humana.
+            Cada piel y cuerpo es único. Tu tratamiento también debería serlo. Por eso diseñamos planes personalizados basados en la evidencia, acompañando tu proceso con calidez y profesionalismo.          
           </p>
         </div>
 

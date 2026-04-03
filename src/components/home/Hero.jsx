@@ -15,14 +15,14 @@ const Hero = () => {
           className="z-10"
         >
           <span className="text-brand-rose font-sans font-bold uppercase tracking-[0.3em] text-xs mb-4 block">
-            Kinesiología & Fisioterapia
+            Sol Pereyra | Centro de Bienestar Integral
           </span>
           <h1 className="text-5xl md:text-7xl font-serif text-brand-green leading-[1.1] mb-6">
-            Recupera tu <br /> 
-            <span className="italic">bienestar</span> natural.
+            Tu mejor <br /> 
+            <span className="italic">versión</span> empieza aca.
           </h1>
           <p className="text-lg text-brand-dark/70 font-sans max-w-lg mb-10 leading-relaxed">
-            Tratamientos personalizados diseñados para devolverle el equilibrio y la vitalidad a tu cuerpo, con la excelencia que mereces.
+            Kinesiología, fisioterapia y estética en un mismo espacio, con tratamientos personalizados enfocados en la recuperación, el cuidado del cuerpo y lograr resultados reales.
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4">
@@ -66,7 +66,7 @@ const Hero = () => {
                 ✨
               </div>
               <div>
-                <p className="text-xs font-bold text-brand-dark uppercase tracking-tighter">Atención Premium</p>
+                <p className="text-xs font-bold text-brand-dark uppercase tracking-tighter">Damos el primer paso?</p>
                 <p className="text-[10px] text-brand-dark/50 italic">Personalizado para vos</p>
               </div>
             </div>

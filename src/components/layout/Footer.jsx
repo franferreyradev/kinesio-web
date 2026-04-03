@@ -1,4 +1,3 @@
-import { motion } from 'framer-motion';
 import { 
   Instagram, 
   MapPin, 
@@ -27,7 +26,7 @@ const Footer = () => {
           
           {/* Columna 1: Branding */}
           <div className="space-y-6">
-            <h3 className="text-3xl font-serif italic text-brand-cream">Ana Sol</h3>
+            <h3 className="text-3xl font-serif italic text-brand-cream">Sol</h3>
             <p className="text-brand-cream/60 font-sans text-sm leading-relaxed max-w-[200px]">
               Kinesiología boutique enfocada en el bienestar integral y la salud en movimiento.
             </p>
